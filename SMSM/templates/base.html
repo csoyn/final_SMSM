@@ -35,31 +35,6 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css" integrity="sha512-8bHTC73gkZ7rZ7vpqUQThUDhqcNFyYi2xgDgPDHc+GXVGHXq+xPjynxIopALmOPqzo9JZj0k6OqqewdGO3EsrQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   
   <link rel="stylesheet" href="{% static 'css/base.css' %}">
-  
-  $(document)
-    .ready(function() {
-
-
-      $('.masthead')
-        .visibility({
-          once: false,
-          onBottomPassed: function() {
-            $('.fixed.menu').transition('fade in');
-          },
-          onBottomPassedReverse: function() {
-            $('.fixed.menu').transition('fade out');
-          }
-        })
-      ;
-
-      // create sidebar and attach to menu open
-      $('.ui.sidebar')
-        .sidebar('attach events', '.toc.item')
-      ;
-
-    })
-  ;
-  </script>
 </head>
 <body>
 
@@ -111,9 +86,10 @@
         {% if request.user.is_authenticated %}
           <div class="right item">
             <a class="ui inverted button" href="{% url 'accounts:profile' user.pk %}">My Page</a>
-            <a class="ui inverted button"><form action="{% url 'accounts:logout' %}">
-            <button btn btn-light>Log Out</button>
-          </form></a>
+            <form action="{% url 'accounts:logout' %}" method="POST">
+              {% csrf_token %}
+              <button class="ui inverted button">Logout</button>
+            </form>
           </div>
         {% else %}
           <div class="right item">
@@ -165,6 +141,31 @@
   integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
   crossorigin="anonymous"></script>
   {% comment %} <script src="assets/library/jquery.min.js"></script> {% endcomment %}
+  <script>
+  $(document)
+    .ready(function() {
+
+
+      $('.masthead')
+        .visibility({
+          once: false,
+          onBottomPassed: function() {
+            $('.fixed.menu').transition('fade in');
+          },
+          onBottomPassedReverse: function() {
+            $('.fixed.menu').transition('fade out');
+          }
+        })
+      ;
+
+      // create sidebar and attach to menu open
+      $('.ui.sidebar')
+        .sidebar('attach events', '.toc.item')
+      ;
+
+    })
+  ;
+  </script>
   <script src="{% static 'dist/components/visibility.js' %}"></script>
   <script src="{% static 'dist/components/sidebar.js' %}"></script>
   <script src="{% static 'dist/components/transition.js' %}"></script> 
@@ -177,6 +178,7 @@
   <script src="http://semantic-ui.com/build/packaged/javascript/semantic.min.js"></script>
   <script src="http://semantic-ui.com/javascript/semantic.js"></script>
   <script>
+  {% block js %}{% endblock js %}
 </body>
 
 </html>
