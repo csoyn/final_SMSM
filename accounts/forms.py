@@ -48,4 +48,6 @@ class CustomUserCreationForm(UserCreationForm):
     class Meta:
         model = user
         fields = ('username', 'like_genre', 'gender',)
-        widgets = {'username' : forms.TextInput(attrs={'class' : 'form-control'})}
+        widgets = {'username' : forms.TextInput(attrs={'class' : 'form-control', 'placeholder' : '아이디를 입력하세요'}),
+                'like_genre': forms.Select(attrs={'class':'form-control'}),
+                'gender': forms.Select(attrs={'class' : 'form-control', 'placeholder' : '성별을 선택하세요'})}
