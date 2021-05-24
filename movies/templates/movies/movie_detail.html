@@ -53,7 +53,13 @@
         <td>
           <a class="ui image label" href="{% url 'accounts:profile' review.user_id%}">
           {% if review.user.gender == '불특정' %}
+            <img src= {% static 'images/smile.jpg' %}>
+            {{ review.user }} 
+          {% elif review.user.gender == '남'  %}
             <img src= {% static 'images/man1.png' %}>
+            {{ review.user }}
+          {% elif review.user.gender == '여'  %}
+            <img src= {% static 'images/woman3.png' %}>
             {{ review.user }}
           {% endif %}
         </a> 

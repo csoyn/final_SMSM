@@ -61,7 +61,7 @@ def delete(request):
     if request.user.is_authenticated:
         request.user.delete()
         auth_logout(request)
-    return redirect('Movies:movie_index')
+    return redirect('movies:movie_index')
 
 
 @login_required
@@ -71,13 +71,13 @@ def update(request):
         form = CustomUserChangeForm(request.POST, instance=request.user)
         if form.is_valid():
             form.save()
-            return redirect('Movies:movie_index')
+            return redirect('movies:movie_index')
     else:
         form = CustomUserChangeForm(instance=request.user)
     context = {
         'form': form,
     }
-    return render(request, 'Account/update.html', context)
+    return render(request, 'accounts/update.html', context)
 
 
 @login_required
@@ -94,7 +94,7 @@ def change_password(request):
     context = {
         'form': form,
     }
-    return render(request, 'Account/change_password.html', context)
+    return render(request, 'accounts/change_password.html', context)
 
 
 def profile(request, user_pk):
@@ -121,5 +121,5 @@ def follow(request, user_pk):
             else:
                 # 팔로우 신청
                 you.followers.add(me)
-        return redirect('Account:profile', you.username)
-    return redirect('Account:login')
+        return redirect('accounts:profile', you.username)
+    return redirect('accounts:login')

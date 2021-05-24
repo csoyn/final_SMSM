@@ -7,7 +7,13 @@
 <div class="profile bg-white text-dark container my-4">
   <div class="shadow-lg p-3 mb-5 bg-body rounded my-4">{{ person }}님의 공간</div>
   <div>
-  <img src=" {% static 'images/man1.png' %}" class="my-4" alt="">
+  {% if person.gender == '불특정' %}
+    <img src= {% static 'images/smile.jpg' %}>
+  {% elif person.gender == '남'  %}
+    <img src= {% static 'images/man1.png' %}>
+  {% elif person.gender == '여'  %}
+    <img src= {% static 'images/woman3.png' %}>
+  {% endif %}
   {% with followings=person.followings.all followers=person.followers.all %}
     <div>
       <div>
@@ -32,7 +38,7 @@
       </div>
       {% if request.user != person %}
         <div>
-          <form action="{% url 'Account:follow' person.pk %}" method="POST">
+          <form action="{% url 'accounts:follow' person.pk %}" method="POST">
             {% csrf_token %}
             {% if request.user in followers %}
               <button>언팔로우</button>

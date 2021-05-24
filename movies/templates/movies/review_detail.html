@@ -47,8 +47,16 @@
       {% for comment in comments %}
         <td>
           <a class="ui image label" href="{% url 'accounts:profile' comment.user_id%}">
-          <img src= {% static 'images/man1.png' %}>
-          {{ comment.user }}
+          {% if comment.user.gender == '불특정' %}
+            <img src= {% static 'images/smile.jpg' %}>
+            {{ comment.user }}
+          {% elif comment.user.gender == '남'  %}
+            <img src= {% static 'images/man1.png' %}>
+            {{ recommentview.user }}
+          {% elif comment.user.gender == '여'  %}
+            <img src= {% static 'images/woman3.png' %}>
+            {{ comment.user }}
+          {% endif %}
         </a> 
         <a href=" {% url 'movies:detail' movie.pk comment.pk  %}"> {{ comment.title }} </a>
         </td>
