@@ -6,6 +6,9 @@
 .conatiner {
   background: white;
 }
+.error {
+  text-display: none;
+}
 
 </style>
 
@@ -13,18 +16,11 @@
   <form class="ui-form" action="{% url 'accounts:signup' %}" method="POST">
   {% csrf_token %}
     {{ form.as_p }}
-    {% comment %} <div class="field">
-      <label for="">{{ form.username }}</label>
-    </div>
-
-    <div class="field">
-      <label for="">{{ form.password }}</label>
-    </div> {% endcomment %}
-
+    {% for error in form.errors %}
+      <p class="t-none">{{ error }}</p>
+    {% endfor %}
+    {{ form.password }}
     <button class="ui button" type="submit">Sign Up</button>
-    {% comment %} {% for i in form %}
-      print(i)
-    {% endfor %} {% endcomment %}
   </form>
 </div>
 {% endblock content %}
