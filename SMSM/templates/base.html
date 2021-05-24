@@ -111,7 +111,9 @@
         {% if request.user.is_authenticated %}
           <div class="right item">
             <a class="ui inverted button" href="{% url 'accounts:profile' user.pk %}">My Page</a>
-            <a class="ui inverted button">Logout</a>
+            <a class="ui inverted button"><form action="{% url 'accounts:logout' %}">
+            <button btn btn-light>Log Out</button>
+          </form></a>
           </div>
         {% else %}
           <div class="right item">

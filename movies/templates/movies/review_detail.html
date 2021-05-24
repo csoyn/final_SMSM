@@ -22,13 +22,13 @@
 <div class="container my-4">
   <div class="ui form">
     <div class="field">
-      <label class="text-light">Review</label>
+      <label class="text-light">댓글 남기기</label>
        <form action="{% url 'movies:comments_create' movie.pk review.pk %}" method ='POST'> 
             {% csrf_token %}
             {{ comment_form.as_p }}
             <div>
               <button class="ui blue labeled submit icon button" type="submit"> 
-              <i class="icon edit" ></i>Write Review </button> 
+              <i class="icon edit" ></i>Write Comment </button> 
             </div>
         </form>
     </div>

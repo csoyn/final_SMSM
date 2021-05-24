@@ -52,8 +52,10 @@
       {% for review in reviews %}
         <td>
           <a class="ui image label" href="{% url 'accounts:profile' review.user_id%}">
-          <img src= {% static 'images/man1.png' %}>
-          {{ review.user }}
+          {% if review.user.gender == '불특정' %}
+            <img src= {% static 'images/man1.png' %}>
+            {{ review.user }}
+          {% endif %}
         </a> 
         <a href=" {% url 'movies:detail' movie.pk review.pk  %}"> {{ review.title }} </a>
         </td>
