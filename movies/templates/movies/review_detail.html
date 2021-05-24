@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<h1>Review detail</h1>
+   <h2> 영화제목 : {{ movie.title }} </h2>
+   <img src="https://image.tmdb.org/t/p/w500/{{ movie.poster_path }}" alt=""> 
+   <br>
+   <h5> 내용: {{ review.content }}</h5>
+   <div>
+   </div>
+  {% comment %} 수정 삭제 뒤로가기 {% endcomment %}
+  <a href="{% url 'movies:update' movie.pk review.pk%}"  >수정</a>
+  
+  <form action="{% url 'movies:delete' movie.pk review.pk%}" method='POST'>
+    {% csrf_token %}
+    <button>삭제</button>
+  </form>
+  <a href="{% url 'movies:movie_detail' movie.pk %}">BACK</a>
+
+  {% comment %} Comments {% endcomment %}
+
+<div class="container my-4">
+  <div class="ui form">
+    <div class="field">
+      <label class="text-light">Review</label>
+       <form action="{% url 'movies:comments_create' movie.pk review.pk %}" method ='POST'> 
+            {% csrf_token %}
+            {{ comment_form.as_p }}
+            <div>
+              <button class="ui blue labeled submit icon button" type="submit"> 
+              <i class="icon edit" ></i>Write Review </button> 
+            </div>
+        </form>
+    </div>
+  </div>
+</div>
+   <p>{{ comments|length }}개의 댓글이 있습니다.</p>
+  <div class="container">
+  <table class="ui celled striped table">
+    <thead>
+      <tr><th colspan="3">
+        Comments
+      </th>
+    </tr></thead>
+    <tbody>
+      <tr>
+      {% for comment in comments %}
+        <td>
+          <a class="ui image label" href="{% url 'accounts:profile' comment.user_id%}">
+          <img src= {% static 'images/man1.png' %}>
+          {{ comment.user }}
+        </a> 
+        <a href=" {% url 'movies:detail' movie.pk comment.pk  %}"> {{ comment.title }} </a>
+        </td>
+        <td> {{ comment.content }}</td>
+        <td class="right aligned">{{ comment.created_at }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock content %}
+

@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="container my-4">
+  <div class="ui form">
+    <div class="field">
+      <label class="text-light">Update Review</label>
+       <form action="" method ='POST'> 
+          {% csrf_token %}
+          {{ form.as_p }}
+          <div>
+            <button class="ui blue labeled submit icon button" type="submit"> 
+            <i class="icon edit" ></i>Update Review </button> 
+          </div>
+        </form>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}
+

@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="ui vertical stripe segment">
+  <div class="ui middle aligned grid container">
+  <div class="row">
+  <div class="sixteen wide column">
+    <div class="card text-center">
+    <div class="card-header">
+      <b>
+      {{ movie.title }}
+      </b>
+    </div>
+    <div class="card-body">
+      <p class="card-text">{{ movie.overview }}</p>
+      <img src="https://image.tmdb.org/t/p/w500/{{ movie.poster_path }}" alt="">
+    </div>
+    <div class="card-footer text-muted">
+      {{ movie.vote_average }}
+    </div>
+  </div>
+  </div>
+  </div>
+</div>
+</div>
+
+<div class="container my-4">
+  <div class="ui form">
+    <div class="field">
+      <label class="text-light">Review</label>
+       <form action="{% url 'movies:create' movie.pk %}" method ='POST'> 
+            {% csrf_token %}
+            {{ review_form.as_p }}
+            <div>
+              <button class="ui blue labeled submit icon button" type="submit"> 
+              <i class="icon edit" ></i>Write Review </button> 
+            </div>
+        </form>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <table class="ui celled striped table">
+    <thead>
+      <tr><th colspan="3">
+        Reviews
+      </th>
+    </tr></thead>
+    <tbody>
+      <tr>
+      {% for review in reviews %}
+        <td>
+          <a class="ui image label" href="{% url 'accounts:profile' review.user_id%}">
+          <img src= {% static 'images/man1.png' %}>
+          {{ review.user }}
+        </a> 
+        <a href=" {% url 'movies:detail' movie.pk review.pk  %}"> {{ review.title }} </a>
+        </td>
+        <td> {{ review.content }}</td>
+        <td class="right aligned">{{ review.created_at }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% endblock content %}
+
+

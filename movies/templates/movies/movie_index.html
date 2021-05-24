@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+  <link rel="stylesheet" href="{% static 'css/movie_index.css' %}">
+  <div class="ui text container">
+      <h1 class="ui inverted header">
+        Share Movie,<br>
+        Share Moments
+      </h1>
+      <h2>Because we do care</h2>
+      <div class="ui huge primary button">Join <i class="right arrow icon"></i></div>
+    </div>
+  </div>
+  <div class='me-4 text-align-center'>
+    <div class="ui middle aligned container">
+      <video width="1500" height="1500" src="{% static 'videos/smile_1920.mp4' %}" autoplay></video>
+    </div>
+  </div>
+  <div class="ui vertical stripe segment">
+    <div class="ui middle aligned stackable grid container">
+      {% comment %} <div class="row">
+        <div class="eight wide column">
+          <h3 class="ui header">We Help Children in need</h3>
+          <p>We can give your company superpowers to do things that they never thought possible. Let us delight your customers and empower your needs...through pure data analytics.</p>
+          <h3 class="ui header">We Make Bananas That Can Dance</h3>
+          <p>Yes that's right, you thought it was the stuff of dreams, but even bananas can be bioengineered.</p>
+        </div>
+        <div class="six wide right floated column">
+          <img src="#" class="ui large bordered rounded image">
+        </div>
+      </div> {% endcomment %}
+      <div class="row">
+        <div class="center aligned column">
+          <a class="ui huge button">Check Them Out</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ui vertical stripe quote segment">
+    <div class="ui equal width stackable internally celled grid">
+      <div class="center aligned row">
+        {% comment %} <div class="column">
+          <h3>"What a Company"</h3>
+          <p>That is what they all say about us</p>
+        </div>
+        <div class="column">
+          <h3>"I shouldn't have gone with their competitor."</h3>
+          <p>
+            <img src="#" class="ui avatar image"> <b>Nan</b> Chief Fun Officer Acme Toys
+          </p>
+        </div> {% endcomment %}
+      </div>
+    </div>
+  </div>
+
+  <div class="ui vertical stripe segment">
+    <div class="ui text container">
+      {% comment %} <h3 class="ui header">Breaking The Grid, Grabs Your Attention</h3>
+      <p>Instead of focusing on content creation and hard work, we have learned how to master the art of doing nothing by providing massive amounts of whitespace and generic content that can seem massive, monolithic and worth your attention.</p>
+      <a class="ui large button">Read More</a>
+      <h4 class="ui horizontal header divider">
+        <a href="#">Case Studies</a>
+      </h4>
+      <h3 class="ui header">Did We Tell You About Our Bananas?</h3>
+      <p>Yes I know you probably disregarded the earlier boasts as non-sequitur filler content, but its really true. It took years of gene splicing and combinatory DNA research, but our bananas can really dance.</p>
+      <a class="ui large button">I'm Still Quite Interested</a> {% endcomment %}
+    </div>
+  </div>
+    <h2 class="ui header justify-content-center">MOVIES</h2>
+    <div class="ui four column grid">
+      <div class="row justify-content-center movie-boxes">
+      {% for movie in movies %}
+        <div class="ui card column mx-2 my-4 captured">
+        <div class="image">
+          <img src="https://image.tmdb.org/t/p/w500/{{ movie.poster_path }}">
+        </div>
+        <div class="content">
+          <a class="header">{{ movie.title }}</a>
+          <div class="meta">
+            <span class="date">{{ movie.release_date }}</span>
+          </div>
+          <div class="description">
+            {{ movie.overview|truncatechars:100 }}
+          </div>
+        </div>
+        <div class="extra content">
+          <a>
+            <i class="star icon"></i>
+            {{ movie.vote_average }}
+          </a>
+        </div>
+        <div class="ui two bottom attached buttons">
+          <a class="ui button">
+            <i class="add icon"></i>Detail</a>
+          <a class="ui primary button" href="{% url 'movies:movie_detail' movie.pk %}">
+            <i class="play icon"></i>Watch</a>
+        </div>
+      </div>
+      {% endfor %}
+      </div>
+    </div>
+    
+  <script src="{% static 'javascripts/movie_index.js' %}"></script>
+{% endblock content %}
+

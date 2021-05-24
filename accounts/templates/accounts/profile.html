@@ -1,0 +1,112 @@
+
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+
+<div class="profile bg-white text-dark container my-4">
+  <div class="shadow-lg p-3 mb-5 bg-body rounded my-4">{{ person }}님의 공간</div>
+  <div>
+  <img src=" {% static 'images/man1.png' %}" class="my-4" alt="">
+  {% with followings=person.followings.all followers=person.followers.all %}
+    <div>
+      <div>
+        <div class="ui labeled button" tabindex="0">
+          <div class="ui blue button">
+            <i class="user outline icon"></i> Following : {{ followings|length }}
+          </div>
+          <a class="ui basic blue left pointing label">
+            Followers : {{ followers|length }}
+          </a>
+        </div>
+      </div>
+      <div class="my-4">
+        <div class="ui labeled button" tabindex="0">
+          <div class="ui red button">
+            <i class="heart icon"></i> Like
+          </div>
+          <a class="ui basic red left pointing label">
+            5
+          </a>
+        </div>
+      </div>
+      {% if request.user != person %}
+        <div>
+          <form action="{% url 'Account:follow' person.pk %}" method="POST">
+            {% csrf_token %}
+            {% if request.user in followers %}
+              <button>언팔로우</button>
+            {% else %}
+              <button>팔로우</button>
+            {% endif %}
+          </form>
+        </div>
+      {% else %}
+        <div>
+          <button type="button" class="ui orange button" data-bs-toggle="modal" data-bs-target='#moodModal'><i class="desktop icon"></i>나만을 위한 맞춤영화 추천받기</button>
+
+          <div class="modal fade" id="moodModal" tabindex="-1" aria-labelledby="moodModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="moodModalLabel">{{ person }}님 오늘 기분은 어떠신가요</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <a class="ui basic button" href={% url 'movies:movie_index' %}><i class="icon smile"></i>신난다</a>
+                  <a class="ui basic button"><i class="icon frown"></i>우울한데..</a>
+                  <a class="ui basic button"><i class="icon meh"></i>그저 그런 오늘..</a>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endif %}
+    </div>
+  {% endwith %}
+  </div>
+
+
+
+{% comment %} My movie recommend {% endcomment %}
+<div class="ui four statistics my-4">
+  <div class="statistic">
+    <div class="value">
+      22
+    </div>
+    <div class="label">
+      Saves
+    </div>
+  </div>
+  <div class="statistic">
+    <div class="text value">
+      Three<br>
+      Thousand
+    </div>
+    <div class="label">
+      Signups
+    </div>
+  </div>
+  <div class="statistic">
+    <div class="value">
+      <i class="plane icon"></i> 5
+    </div>
+    <div class="label">
+      Flights
+    </div>
+  </div>
+  <div class="statistic">
+    <div class="value">
+      <img src="/images/avatar/small/joe.jpg" class="ui circular inline image">
+      42
+    </div>
+    <div class="label">
+      Team Members
+    </div>
+  </div>
+</div>
+
+{% endblock content %}

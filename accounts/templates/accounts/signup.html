@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% block content %}
+<style>
+.conatiner {
+  background: white;
+}
+
+</style>
+
+<div class="container my-4">
+  <form class="ui-form" action="{% url 'accounts:signup' %}" method="POST">
+  {% csrf_token %}
+    {{ form.as_p }}
+    {% comment %} <div class="field">
+      <label for="">{{ form.username }}</label>
+    </div>
+
+    <div class="field">
+      <label for="">{{ form.password }}</label>
+    </div> {% endcomment %}
+
+    <button class="ui button" type="submit">Sign Up</button>
+    {% comment %} {% for i in form %}
+      print(i)
+    {% endfor %} {% endcomment %}
+  </form>
+</div>
+{% endblock content %}
